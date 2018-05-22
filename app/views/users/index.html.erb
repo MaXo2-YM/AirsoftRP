@@ -1,0 +1,7 @@
+<h1>Utilisateurs</h1>
+<p>Retrouvez ici la liste des différents utilisateurs du site :</p>
+<ul>
+<% @users.each do |user| %>
+	<li><a href="/users/<%= user.id %>"><%= user.username %></a></li>
+<% end %>
+</ul>

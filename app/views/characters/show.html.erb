@@ -1,0 +1,9 @@
+<h1><%= @character.first_name + " " + @character.last_name %></h1>
+<table>
+	<tr><td>Âge :</td><td><%= @character.age %></td></tr>
+	<tr><td>Sexe :</td><td><%= @character.sex %></td></tr>
+	<tr><td>XP :</td><td><%= @character.experience_points %></td></tr>
+	<tr><td>Argent :</td><td><%= @character.money %> €</td></tr>
+	<tr><td>Histoire :</td><td><%= form_tag "/characters/#{@character.id}", method: "patch" do %><textarea name="background"><%= @character.background %></textarea></td></tr>
+	<tr><td><input type="submit" value="Modifier le Personnage" /><% end %></td><td><%= form_tag "/characters/#{@character.id}", method: "delete" do %><input type="submit" value="Supprimer le personnage" /><% end %></td></tr>
+</table>

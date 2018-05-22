@@ -1,0 +1,50 @@
+<h1><%= @user.username %></h1>
+<%= form_tag "/users/#{@user.id}", method: "patch" do %>
+	<table>
+		<tr><td>Nom :</td><td><input type="text" name="last_name" value="<%= @user.last_name %>" /></td></tr>
+		<tr><td>Prénom :</td><td><input type="text" name="first_name" value="<%= @user.first_name %>" /></td></tr>
+		<tr><td>Adresse E-Mail :</td><td><input type="text" name="mail" value="<%= @user.mail %>" /></td></tr>
+		<tr><td>Mot de Passe :</td><td><input type="password" name="password" value="" /></td></tr>
+		<tr><td>Date d'Inscription :</td><td><%= @user.inscription_date %></td></tr>
+
+		<tr>
+			<td><input type="submit" value="Modifier l'utilisateur" /><% end %></td>
+			<td><%= form_tag "/users/#{@user.id}", method: "delete" do %><input type="submit" value="Supprimer l'utilisateur" /><% end %></td>
+		</tr>
+	</table>
+
+<h2>Personnages</h2>
+<% if !@user.characters.empty? %>
+
+<p>Retrouvez ici la liste des différents personnages de <%= @user.username %> :</p>
+<ul>
+<% @user.characters.each do |character| %>
+	<li><a href="/characters/<%= character.id %>"><%= character.first_name + " " + character.last_name %></a></li>
+</ul>
+<% end %>
+<% end %>
+	<h3>Créer un nouveau personnage.</h3>
+	<%= form_tag "/characters", method: "post" do %>
+		<input type="hidden" name="user_id" value="<%= @user.id %>" />
+		<table>
+			<tr><td>Nom :</td><td><input type="text" name="last_name" value="" /></td></tr>
+			<tr><td>Prénom :</td><td><input type="text" name="first_name" value="" /></td></tr>
+			<tr><td>Âge :</td><td><input type="text" name="age" value="" /></td></tr>
+			<tr>
+				<td>Sexe :</td>
+				<td>
+					<input type="radio" name="sex" value="Homme" id="Homme" />
+					<label for="Homme">Homme</label>
+
+					<input type="radio" name="sex" value="Femme" id="Femme" />
+					<label for="Femme">Femme</label>
+
+					<input type="radio" name="sex" value="Indéfini" id="Indefini" />
+					<label for="Indefini">Autre/Indéfini</label>
+				</td>
+			</tr>
+			<tr><td>Histoire :</td><td><textarea name="background"></textarea></td></tr>
+		</table>
+		<input type="submit" value="Créer le Personnage" />
+	<% end %>
+<p><a href="/users">Retourner à la liste des utilisateur</a></p>

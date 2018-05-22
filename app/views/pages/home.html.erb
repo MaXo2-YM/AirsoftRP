@@ -1,0 +1,25 @@
+<h1>Airsoft RP</h1>
+	<p>Bienvenue sur Airsoft RP, la dimension la plus Role Play de l'Airsoft.</p>
+	<p>Exemple d'affichage de variables : <%= @variable %>.</p>
+
+<% if @variable == 42 %>
+	Super, la variable vaut 42 !
+<% else %>
+	Mince, la variable ne vaut pas 42 !
+<% end %>
+
+<br />
+
+<% @variable.times do |i| %> <!-- Boucle -->
+	<%= i %>
+<% end %>
+
+<h2>S'inscrire</h2>
+<p>Pour vous inscrire, il suffit de remplir le formulaire suivant :
+<%= form_tag "/users", method: "post" do %>
+
+  Adresse e-mail: <input type="text" name="mail" />
+
+  <input type="submit" value="S'inscrire" />
+
+<% end %>
