@@ -4,8 +4,11 @@ Rails.application.routes.draw do
 
 	get 'users' => 'users#index'
 	get 'users/:id' => 'users#show'
+    get 'signup' => 'users#new'
+    
     get 'characters/:id' => 'characters#show'
 	get 'tchoin' => 'pages#test'
+
 
 	post 'users' => 'users#create'
     post 'characters' => 'characters#create'

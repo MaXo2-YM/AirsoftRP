@@ -1,0 +1,41 @@
+<h1>S'inscrire</h1>
+<%= form_for @user, url: {action: "create"} do |f| %>
+	<table>
+		<tr>
+			<td>Nom d'utilisateur :</td>
+			<td>
+				<%= f.text_field :username %>
+				<% if @user.errors.any? %>
+			 		<%= @user.errors[:username].first %>
+				<% end %>
+			</td>
+		</tr>
+		<tr>
+			<td>Adresse e-mail :</td>
+			<td>
+				<%= f.email_field :mail %>
+				<% if @user.errors.any? %>
+			 		<%= @user.errors[:mail].first %>
+				<% end %>
+			</td>
+		</tr>
+		<tr>
+			<td>Mot de passe :</td>
+			<td>
+				<%= f.password_field :password %>
+				<% if @user.errors.any? %>
+			 		<%= @user.errors[:password].first %>
+				<% end %>
+			</td>
+		</tr>
+		<tr>
+			<td>Confirmation du Mot de passe :</td>
+			<td>
+				<%= f.password_field :password_confirmation %>
+				<% if @user.errors.any? %>
+			 		<%= @user.errors[:password_confirmation].first %>
+				<% end %>
+			</td></tr>
+		<tr><td></td><td><%= f.submit "S'inscrire" %></td>
+	</table>
+<% end %>
