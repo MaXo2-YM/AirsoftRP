@@ -1,0 +1,63 @@
+<h1><%= @user.username %></h1>
+<%= form_for @user, url: {action: "update"} do |f| %>
+	<table>
+		<tr><td>Nom :</td><td><%= f.text_field :last_name %></td><td></td></tr>
+		<tr><td>Prénom :</td><td><%= f.text_field :first_name %></td><td></td></tr>
+		<tr><td>Adresse E-Mail :</td><td><%= f.email_field :mail %></td><td></td></tr>
+		<tr><td>Mot de Passe :</td><td><%= f.password_field :password %></td><td></td></tr>
+		<tr><td>Date d'Inscription :</td><td><%= @user.inscription_date %></td><td></td></tr>
+		<% if @user.level ==  0 %>
+		<tr><td>Rôle</td><td><%= f.select :level, options_for_select([['Administrateur', 0], ['Modérateur', 1], ['Contributeur', 2], ['Utilisateur', 3]], @user.level ) %></td>
+		<% end %>
+		<tr>
+			<td><input type="submit" value="Modifier l'utilisateur" /><% end %></td>
+			<td><%= form_tag "/users/#{@user.id}", method: "delete" do %><input type="submit" value="Supprimer l'utilisateur" /><% end %></td>
+			<td></td>
+		</tr>
+	</table>
+
+	<h2>Personnages</h2>
+	<table>
+		<tr>
+			<th>Prénom Nom</th>
+			<th>Age</th>
+			<th>Sexe</th>
+			<th>Equipe</th>
+			<th>Argent</th>
+			<th>Points d'Expériences</th>
+		</tr>
+	<% @user.characters.each do |character| %>
+		<tr>
+			<td><a href="/characters/<%= character.id %>"><%= character.first_name + " " + character.last_name %></a></td>
+			<td><a href="/characters/<%= character.id %>"><%= character.age.to_s + " Ans" %></a></td>
+			<td><a href="/characters/<%= character.id %>"><%= character.sex %></a></td>
+			<td></td>
+			<td><a href="/characters/<%= character.id %>"><%= character.money %></a></td>
+			<td><a href="/characters/<%= character.id %>"><%= character.experience_points %></a></td>
+		</tr>
+	<% end %>
+	</table>
+		<h3>Créer un nouveau personnage.</h3>
+		<%= form_tag "/characters", method: "post" do %>
+			<input type="hidden" name="user_id" value="<%= @user.id %>" />
+			<table>
+				<tr><td>Nom :</td><td><input type="text" name="last_name" value="" /></td></tr>
+				<tr><td>Prénom :</td><td><input type="text" name="first_name" value="" /></td></tr>
+				<tr><td>Âge :</td><td><input type="text" name="age" value="" /></td></tr>
+				<tr>
+					<td>Sexe :</td>
+					<td>
+						<input type="radio" name="sex" value="Homme" id="Homme" />
+						<label for="Homme">Homme</label>
+
+						<input type="radio" name="sex" value="Femme" id="Femme" />
+						<label for="Femme">Femme</label>
+
+						<input type="radio" name="sex" value="Indéfini" id="Indefini" />
+						<label for="Indefini">Autre/Indéfini</label>
+					</td>
+				</tr>
+				<tr><td>Histoire :</td><td><textarea name="background"></textarea></td></tr>
+			</table>
+			<input type="submit" value="Créer le Personnage" />
+		<% end %>

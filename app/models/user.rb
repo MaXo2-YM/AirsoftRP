@@ -18,8 +18,9 @@ class User < ActiveRecord::Base
 					 uniqueness: { message: "L'adresse e-mail existe déjà." },
 					 format: { with: EMAIL_REGEX, message: "L'adresse e-mail n'est pas valide." }
 
-	validates :password, confirmation: { message: "Les deux mots de passe doivent être identiques" }, #password_confirmation attr
-						 length: { in: 6..20, too_short: "Le mot de passe doit faire plus de 6 characters", too_long: "Le mot de passe doit faire moins de 20 characters" }
+	validates :password, presence: { on: :create, message: "Vous devez entrer un mot de passe" },
+						 confirmation: { on: :create, message: "Les deux mots de passe doivent être identiques" }, #password_confirmation attr
+						 length: { on: :create, in: 6..20, too_short: "Le mot de passe doit faire plus de 6 characters", too_long: "Le mot de passe doit faire moins de 20 characters" }
 
 	def encrypt_password
 	    unless password.blank?

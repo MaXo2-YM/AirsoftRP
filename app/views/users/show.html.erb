@@ -1,27 +1,53 @@
 <h1><%= @user.username %></h1>
-<%= form_tag "/users/#{@user.id}", method: "patch" do %>
 	<table>
-		<tr><td>Nom :</td><td><input type="text" name="last_name" value="<%= @user.last_name %>" /></td></tr>
-		<tr><td>Prénom :</td><td><input type="text" name="first_name" value="<%= @user.first_name %>" /></td></tr>
-		<tr><td>Adresse E-Mail :</td><td><input type="text" name="mail" value="<%= @user.mail %>" /></td></tr>
-		<tr><td>Mot de Passe :</td><td><input type="password" name="password" value="" /></td></tr>
+		<tr><td>Nom :</td><td><%= @user.last_name %></td></tr>
+		<tr><td>Prénom :</td><td><%= @user.first_name %></td></tr>
+		<tr><td>Adresse E-Mail :</td><td><%= @user.mail %></td></tr>
 		<tr><td>Date d'Inscription :</td><td><%= @user.inscription_date %></td></tr>
+		<tr><td>Type de Compte :</td><td><%= @levelLit %></td></tr>
 
-		<tr>
-			<td><input type="submit" value="Modifier l'utilisateur" /><% end %></td>
-			<td><%= form_tag "/users/#{@user.id}", method: "delete" do %><input type="submit" value="Supprimer l'utilisateur" /><% end %></td>
-		</tr>
+		<tr><td></td><td><%= form_tag "/users/#{@user.id}", method: "delete" do %><input type="submit" value="Supprimer l'utilisateur" /><% end %></td></tr>
+
+		<tr><td colspan="2">Résumé</td></tr>
+		<tr><td>Nombre de personnages :</td><td><%= @user.characters.length %></td></tr>
+		<tr><td>Total Points D'expérience :</td><td><%= @totalxp %></td></tr>
+		<tr><td>Total Argent :</td><td><%= @totalmoney %></td></tr>
+		<tr><td>Nombre d'équipes actuelles :</td><td></td></tr>
+		<tr><td>Nombre de Répliques possédées :</td><td></td></tr>
+		<tr><td>Nombre de Répliques utilisées :</td><td></td></tr>
+		<tr><td>Nombre de Parties organisées :</td><td></td></tr>
+		<tr><td>Nombre de Parties jouées :</td><td></td></tr>
 	</table>
+<h2>Associations</h2>
+<h2>Equipes</h2>
 
-<h2>Personnages</h2>
 <% if !@user.characters.empty? %>
-
-<p>Retrouvez ici la liste des différents personnages de <%= @user.username %> :</p>
-<ul>
+<h2>Personnages</h2>
+<table>
+	<tr>
+		<th>Prénom Nom</th>
+		<th>Age</th>
+		<th>Sexe</th>
+		<th>Equipe</th>
+		<th>Argent</th>
+		<th>Points d'Expériences</th>
+	</tr>
 <% @user.characters.each do |character| %>
-	<li><a href="/characters/<%= character.id %>"><%= character.first_name + " " + character.last_name %></a></li>
-</ul>
+	<tr>
+		<td><a href="/characters/<%= character.id %>"><%= character.first_name + " " + character.last_name %></a></td>
+		<td><a href="/characters/<%= character.id %>"><%= character.age.to_s + " Ans" %></a></td>
+		<td><a href="/characters/<%= character.id %>"><%= character.sex %></a></td>
+		<td></td>
+		<td><a href="/characters/<%= character.id %>"><%= character.money %></a></td>
+		<td><a href="/characters/<%= character.id %>"><%= character.experience_points %></a></td>
+	</tr>
 <% end %>
+	<tr>
+		<td colspan="4">Total : <%= @user.characters.length %> Personnage(s)</td>
+		<td><%= @totalmoney %></td>
+		<td><%= @totalxp %></td>
+	</tr>
+</table>
 <% end %>
 	<h3>Créer un nouveau personnage.</h3>
 	<%= form_tag "/characters", method: "post" do %>
@@ -47,4 +73,8 @@
 		</table>
 		<input type="submit" value="Créer le Personnage" />
 	<% end %>
+<h2>Répliques</h2>
+<h2>Parties</h2>
+<h3>Organisteur</h3>
+<h3>Participants</h3>
 <p><a href="/users">Retourner à la liste des utilisateur</a></p>

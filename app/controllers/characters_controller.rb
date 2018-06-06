@@ -11,7 +11,7 @@ class CharactersController < ApplicationController
         character.user_id = params[:user_id]
         character.save!
 
-		redirect_to "/characters/1"
+		redirect_to "/characters/#{@character.id}"
 	end
 
     def show

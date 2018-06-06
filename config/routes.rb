@@ -5,7 +5,8 @@ Rails.application.routes.draw do
 	get 'users' => 'users#index'
 	get 'users/:id' => 'users#show'
     get 'signup' => 'users#new'
-    
+	get 'users/:id/edit' => 'users#edit'
+
     get 'characters/:id' => 'characters#show'
 	get 'tchoin' => 'pages#test'
 
