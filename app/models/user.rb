@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
 	has_many :characters
 	attr_accessor :password
 
+	before_create :encrypt_password, :set_default
 	before_save :encrypt_password
 	after_save :clear_password
 
@@ -23,14 +24,23 @@ class User < ActiveRecord::Base
 						 length: { on: :create, in: 6..20, too_short: "Le mot de passe doit faire plus de 6 characters", too_long: "Le mot de passe doit faire moins de 20 characters" }
 
 	def encrypt_password
-	    unless password.blank?
-	      self.salt = BCrypt::Engine.generate_salt
-	      self.encrypted_password = BCrypt::Engine.hash_secret(password, salt)
-	    end
-	  end
+		unless password.blank?
+	 		self.salt = BCrypt::Engine.generate_salt
+			self.encrypted_password = BCrypt::Engine.hash_secret(password, salt)
+	  	end
+	end
 
-	  def clear_password
+	def clear_password
 	    self.password = nil
 		self.password_confirmation = nil
+	end
+
+	def set_default
+		self.level = 3
+		self.inscription_date = Time.now
+	end
+
+	def admin?
+		self.level == 0
 	end
 end

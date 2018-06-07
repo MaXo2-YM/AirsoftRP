@@ -1,10 +1,10 @@
 class UsersController < ApplicationController
 
 	def index
-		if session[:user_id] && User.find(session[:user_id]).level == 0
+		if @current_user.try(:admin?)
 			@users = User.all
 		else
-			redirect_to "/"
+			return redirect_to request.referrer || root_path
 		end
 	end
 
@@ -16,10 +16,9 @@ class UsersController < ApplicationController
     	@user = User.new
 		@user.username = params[:user][:username]
 		@user.mail = params[:user][:mail]
-		@user.inscription_date = Time.now
 		@user.password = params[:user][:password]
 		@user.password_confirmation = params[:user][:password_confirmation]
-		@user.level = 3
+		#@user.level = 3
     	if @user.save
     		flash[:notice] = "Vous vous êtes bien inscrit"
         	flash[:color]= "valid"
@@ -34,7 +33,7 @@ class UsersController < ApplicationController
 
 	def show
 		@user = User.find(params[:id])
-		if @user.level == 0
+		if @user.admin?
 			@levelLit = "Administrateur"
 		elsif @user.level == 1
 			@levelLit = "Modérateur"
@@ -53,23 +52,22 @@ class UsersController < ApplicationController
 	end
 
 	def edit
-		if session[:user_id]
+		if @current_user
 			@user = User.find(params[:id])
-			@user_session = User.find(session[:user_id])
-			if @user.id != @user_session.id && @user_session.level != 0
-				redirect_to "/users/#{params[:id]}"
+			if @user.id != @current_user.id && !@current_user.admin?
+				redirect_to request.referrer || "/users/#{params[:id]}"
 			end
 		else
-			redirect_to "/users/#{params[:id]}"
+			redirect_to request.referrer || "/users/#{params[:id]}"
 		end
 	end
 
 	def update
 		@user = User.find(params[:id])
 		@user.mail = params[:user][:mail]
-		@user.last_name =params[:user][:last_name]
-		@user.first_name =params[:user][:first_name]
-		@user.level =params[:user][:level]
+		@user.last_name = params[:user][:last_name]
+		@user.first_name = params[:user][:first_name]
+		@user.level = params[:user][:level]
 		@user.password = params[:user][:password]
 		if @user.save
     		flash[:notice] = "Vous avez bien modifié votre compte"
@@ -86,7 +84,8 @@ class UsersController < ApplicationController
 		if User.find(params[:id]).destroy
 			flash[:notice] = "L'Utilisteur a bien été supprimé"
 			flash[:color]= "valid"
-			if session[:user_id] == params[:id]
+			if @current_user.id == params[:id].to_i
+				# flash[:notice] = "blop"
 				logout
 			else
 				redirect_to "/users"
@@ -94,7 +93,7 @@ class UsersController < ApplicationController
 		else
         	flash[:notice] = "Il y a eu une erreur lors de la suppression de l'utilisateur"
         	flash[:color]= "invalid"
-			render "/users/#{@user.id}/edit"
+			render "/users/#{params[:id]}/edit"
      	end
 	end
 
@@ -108,17 +107,18 @@ class UsersController < ApplicationController
 				redirect_to "/users/#{@current_user.id}/edit"
 			else
 				flash[:notice] = "Connexion impossible : Mot de Passe incorrect."
-				redirect_to "/"
+				redirect_to root_path
 			end
 		else
 			flash[:notice] = "Connexion impossible : cet Utilisateur n'existe pas."
-			redirect_to "/"
+			redirect_to root_path
 		end
 	end
 
 	def logout
 		session[:user_id] = nil
+		@current_user = nil
 	    flash[:notice] = "Vous êtes maintenant déconnecté."
-		redirect_to "/"
+		redirect_to root_path
 	end
 end
