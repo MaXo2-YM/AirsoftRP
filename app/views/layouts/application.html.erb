@@ -11,18 +11,41 @@
 
 	<body>
 		<% if flash[:color]== "valid" %>
-			<div class="valid_notice">
-				<p><%= flash[:notice] %></p>
-			</div>
+		<div class="valid_notice">
+			<p><%= flash[:notice] %></p>
+		</div>
 		<% elsif flash[:color]== "invalid" %>
-			<div class="invalid_notice">
-				<p><%= flash[:notice] %></p>
-			</div>
-		<% else %>
-			<div class="notice">
-				<p><%= flash[:notice] %></p>
-			</div>
+		<div class="invalid_notice">
+			<p><%= flash[:notice] %></p>
+		</div>
+		<% elsif flash[:notice] %>
+		<div class="notice">
+			<p><%= flash[:notice] %></p>
+		</div>
 		<% end %>
+		<div>
+			<a href="/">Accueil</a> - Les Parties - Les Associations
+			<% if session[:user_id] %>
+				<% if User.find(session[:user_id]).level == 0 %>
+			<a href="/users">Les Utilisateurs</a> -
+			<a href="/characters">Les Personnages</a> -
+			<a href="#">Les Répliques</a> -
+			<a href="#">Les Equipes</a> -
+				<% end %>
+			<a href="/users/<%= session[:user_id] %>/edit">Mon compte</a> -
+			<%= link_to 'Se Déconnecter', '/users/login', :method => :delete %>
+			<% else %>
+			<a href="/signup">S'inscrire</a>
+				<%= form_tag "/users/login", method: :post do |f| %>
+			<input type="text" name="username" placeholder="Pseudo" />
+			<input type="password" name="password" placeholder="Mot de Passe"/>
+			<input type="submit" value="Se Connecter" />
+				<% end %>
+			<% end %>
+		</div>
 		<%= yield %>
+		<hr />
+		Accueil - A propos<br />
+		MaXo2 Coyleft 2018
 	</body>
 </html>

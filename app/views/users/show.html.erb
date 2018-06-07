@@ -5,9 +5,6 @@
 		<tr><td>Adresse E-Mail :</td><td><%= @user.mail %></td></tr>
 		<tr><td>Date d'Inscription :</td><td><%= @user.inscription_date %></td></tr>
 		<tr><td>Type de Compte :</td><td><%= @levelLit %></td></tr>
-
-		<tr><td></td><td><%= form_tag "/users/#{@user.id}", method: "delete" do %><input type="submit" value="Supprimer l'utilisateur" /><% end %></td></tr>
-
 		<tr><td colspan="2">Résumé</td></tr>
 		<tr><td>Nombre de personnages :</td><td><%= @user.characters.length %></td></tr>
 		<tr><td>Total Points D'expérience :</td><td><%= @totalxp %></td></tr>
@@ -49,30 +46,6 @@
 	</tr>
 </table>
 <% end %>
-	<h3>Créer un nouveau personnage.</h3>
-	<%= form_tag "/characters", method: "post" do %>
-		<input type="hidden" name="user_id" value="<%= @user.id %>" />
-		<table>
-			<tr><td>Nom :</td><td><input type="text" name="last_name" value="" /></td></tr>
-			<tr><td>Prénom :</td><td><input type="text" name="first_name" value="" /></td></tr>
-			<tr><td>Âge :</td><td><input type="text" name="age" value="" /></td></tr>
-			<tr>
-				<td>Sexe :</td>
-				<td>
-					<input type="radio" name="sex" value="Homme" id="Homme" />
-					<label for="Homme">Homme</label>
-
-					<input type="radio" name="sex" value="Femme" id="Femme" />
-					<label for="Femme">Femme</label>
-
-					<input type="radio" name="sex" value="Indéfini" id="Indefini" />
-					<label for="Indefini">Autre/Indéfini</label>
-				</td>
-			</tr>
-			<tr><td>Histoire :</td><td><textarea name="background"></textarea></td></tr>
-		</table>
-		<input type="submit" value="Créer le Personnage" />
-	<% end %>
 <h2>Répliques</h2>
 <h2>Parties</h2>
 <h3>Organisteur</h3>

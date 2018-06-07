@@ -1,7 +1,11 @@
 class UsersController < ApplicationController
 
 	def index
-		@users = User.all
+		if session[:user_id] && User.find(session[:user_id]).level == 0
+			@users = User.all
+		else
+			redirect_to "/"
+		end
 	end
 
 	def new
@@ -19,7 +23,8 @@ class UsersController < ApplicationController
     	if @user.save
     		flash[:notice] = "Vous vous êtes bien inscrit"
         	flash[:color]= "valid"
-			redirect_to "/users/#{@user.id}"
+			session[:user_id] = @user.id
+			redirect_to "/users/#{@user.id}/edit"
      	else
         	flash[:notice] = "Le formulaire est invalide"
         	flash[:color]= "invalid"
@@ -48,7 +53,15 @@ class UsersController < ApplicationController
 	end
 
 	def edit
-		@user = User.find(params[:id])
+		if session[:user_id]
+			@user = User.find(params[:id])
+			@user_session = User.find(session[:user_id])
+			if @user.id != @user_session.id && @user_session.level != 0
+				redirect_to "/users/#{params[:id]}"
+			end
+		else
+			redirect_to "/users/#{params[:id]}"
+		end
 	end
 
 	def update
@@ -73,11 +86,39 @@ class UsersController < ApplicationController
 		if User.find(params[:id]).destroy
 			flash[:notice] = "L'Utilisteur a bien été supprimé"
 			flash[:color]= "valid"
-			redirect_to "/users"
+			if session[:user_id] == params[:id]
+				logout
+			else
+				redirect_to "/users"
+			end
 		else
         	flash[:notice] = "Il y a eu une erreur lors de la suppression de l'utilisateur"
         	flash[:color]= "invalid"
 			render "/users/#{@user.id}/edit"
      	end
+	end
+
+	def check
+		@current_user = User.where(username: params[:username]).first
+		if @current_user
+			encrypted_password = BCrypt::Engine.hash_secret(params[:password], @current_user.salt)
+			if @current_user.encrypted_password == encrypted_password
+				session[:user_id] = @current_user.id
+				flash[:notice] = "Bienvenue #{@current_user.username} !"
+				redirect_to "/users/#{@current_user.id}/edit"
+			else
+				flash[:notice] = "Connexion impossible : Mot de Passe incorrect."
+				redirect_to "/"
+			end
+		else
+			flash[:notice] = "Connexion impossible : cet Utilisateur n'existe pas."
+			redirect_to "/"
+		end
+	end
+
+	def logout
+		session[:user_id] = nil
+	    flash[:notice] = "Vous êtes maintenant déconnecté."
+		redirect_to "/"
 	end
 end

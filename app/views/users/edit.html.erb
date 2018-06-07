@@ -1,12 +1,12 @@
 <h1><%= @user.username %></h1>
 <%= form_for @user, url: {action: "update"} do |f| %>
 	<table>
-		<tr><td>Nom :</td><td><%= f.text_field :last_name %></td><td></td></tr>
-		<tr><td>Prénom :</td><td><%= f.text_field :first_name %></td><td></td></tr>
-		<tr><td>Adresse E-Mail :</td><td><%= f.email_field :mail %></td><td></td></tr>
-		<tr><td>Mot de Passe :</td><td><%= f.password_field :password %></td><td></td></tr>
+		<tr><td>Nom :</td><td><%= f.text_field :last_name %><% if @user.errors.any?; puts @user.errors[:last_name].first; end %></td><td></td></tr>
+		<tr><td>Prénom :</td><td><%= f.text_field :first_name %><% if @user.errors.any?; puts @user.errors[:first_name].first; end %></td><td></td></tr>
+		<tr><td>Adresse E-Mail :</td><td><%= f.email_field :mail %><% if @user.errors.any?; puts @user.errors[:email].first; end %></td><td></td></tr>
+		<tr><td>Mot de Passe :</td><td><%= f.password_field :password %><% if @user.errors.any?; puts @user.errors[:password].first; end %></td><td></td></tr>
 		<tr><td>Date d'Inscription :</td><td><%= @user.inscription_date %></td><td></td></tr>
-		<% if @user.level ==  0 %>
+		<% if @user_session.level ==  0 %>
 		<tr><td>Rôle</td><td><%= f.select :level, options_for_select([['Administrateur', 0], ['Modérateur', 1], ['Contributeur', 2], ['Utilisateur', 3]], @user.level ) %></td>
 		<% end %>
 		<tr>

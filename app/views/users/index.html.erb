@@ -1,7 +1,6 @@
 <h1>Utilisateurs</h1>
-<p>Retrouvez ici la liste des différents utilisateurs du site :</p>
 <ul>
 <% @users.each do |user| %>
-	<li><a href="/users/<%= user.id %>"><%= user.username %></a></li>
+	<li><a href="/users/<%= user.id %>/edit"><%= user.username %></a> - <%= link_to 'Supprimer l\'Utilisateur', "/users/#{user.id}", :method => :delete %></li>
 <% end %>
 </ul>
