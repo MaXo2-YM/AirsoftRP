@@ -1,6 +1,6 @@
-<h1>Utilisateurs</h1>
+<h1><%= t(".title") %></h1>
 <ul>
 <% @users.each do |user| %>
-	<li><a href="/users/<%= user.id %>/edit"><%= user.username %></a> - <%= link_to 'Supprimer l\'Utilisateur', "/users/#{user.id}", :method => :delete %></li>
+	<li><a href="/users/<%= user.id %>/edit"><%= user.username %></a> - <%= link_to t(".delete"), "/users/#{user.id}", :method => :delete %></li>
 <% end %>
 </ul>

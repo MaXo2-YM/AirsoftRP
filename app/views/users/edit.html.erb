@@ -1,17 +1,17 @@
 <h1><%= @user.username %></h1>
 <%= form_for @user, url: {action: "update"} do |f| %>
 	<table>
-		<tr><td>Nom :</td><td><%= f.text_field :last_name %><% if @user.errors.any?; puts @user.errors[:last_name].first; end %></td><td></td></tr>
-		<tr><td>Prénom :</td><td><%= f.text_field :first_name %><% if @user.errors.any?; puts @user.errors[:first_name].first; end %></td><td></td></tr>
-		<tr><td>Adresse E-Mail :</td><td><%= f.email_field :mail %><% if @user.errors.any?; puts @user.errors[:email].first; end %></td><td></td></tr>
-		<tr><td>Mot de Passe :</td><td><%= f.password_field :password %><% if @user.errors.any?; puts @user.errors[:password].first; end %></td><td></td></tr>
-		<tr><td>Date d'Inscription :</td><td><%= @user.inscription_date %></td><td></td></tr>
-		<% if @current_user.level ==  0 %>
-		<tr><td>Rôle</td><td><%= f.select :level, options_for_select([['Administrateur', 0], ['Modérateur', 1], ['Contributeur', 2], ['Utilisateur', 3]], @user.level ) %></td>
+		<tr><td><%= f.label :last_name %>:</td><td><%= f.text_field :last_name %><% if @user.errors.any?; puts @user.errors[:last_name].first; end %></td><td></td></tr>
+		<tr><td><%= f.label :first_name %>:</td><td><%= f.text_field :first_name %><% if @user.errors.any?; puts @user.errors[:first_name].first; end %></td><td></td></tr>
+		<tr><td><%= f.label :mail %>:</td><td><%= f.email_field :mail %><% if @user.errors.any?; puts @user.errors[:email].first; end %></td><td></td></tr>
+		<tr><td><%= f.label :password %>:</td><td><%= f.password_field :password %><% if @user.errors.any?; puts @user.errors[:password].first; end %></td><td></td></tr>
+		<tr><td><%= t("activerecord.attributes.user.inscription_date") %>:</td><td><%= @user.inscription_date %></td><td></td></tr>
+		<% if @current_user.role ==  0 %>
+		<tr><td><%= f.label :role %></td><td><%= f.select :role, options_for_select([['Administrateur', 0], ['Modérateur', 1], ['Contributeur', 2], ['Utilisateur', 3]], @user.role ) %></td>
 		<% end %>
 		<tr>
-			<td><input type="submit" value="Modifier l'utilisateur" /><% end %></td>
-			<td><%= form_tag "/users/#{@user.id}", method: "delete" do %><input type="submit" value="Supprimer l'utilisateur" /><% end %></td>
+			<td><%= f.submit %><% end %></td>
+			<td><%= form_tag "/users/#{@user.id}", method: "delete" do %><%= submit_tag %><% end %></td>
 			<td></td>
 		</tr>
 	</table>

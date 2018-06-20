@@ -36,11 +36,11 @@ class User < ActiveRecord::Base
 	end
 
 	def set_default
-		self.level = 3
+		self.role = 3
 		self.inscription_date = Time.now
 	end
 
 	def admin?
-		self.level == 0
+		self.role == 0
 	end
 end

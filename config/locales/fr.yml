@@ -1,0 +1,43 @@
+fr:
+    users:
+        index:
+            title: "Liste des Utilisateurs"
+            delete: "Supprimer l'utilisateur"
+
+        new:
+            title: "S'inscrire"
+        # new:
+        #     username: "Nom d'Utilisateur"
+
+        show:
+            resume: "Résumé"
+    activerecord:
+        models:
+            user:
+                one: "Utilisateur"
+                others: "Utilisateurs"
+        attributes:
+            user:
+                username: "Nom d'Utilisateur "
+                mail: "E-Mail "
+                password: "Mot de Passe "
+                password_confirmation: "Confirmation du Mot de Passe "
+                last_name: "Nom "
+                first_name: "Prénom "
+                inscription_date: "Date d'inscription "
+                account_type: "Rôle "
+                total_user_characters: "Nombre de personnages "
+                total_user_xp: "Total de point d'expérience "
+                total_user_money: "Argent Total "
+                total_user_teams : "Nombre d'équipes actuelles "
+                total_user_guns_owned: "Nombre de Répliques possédées "
+                total_user_guns_used: "Nombre de Répliques utilisées "
+                total_user_games_planned: "Nombre de Parties organisées "
+                total_user_games_played: "Nombre de Parties Jouées "
+    helpers:
+        submit:
+            user:
+                create: "S'inscrire"
+                update: "Enregistrer"
+                destroy: "Supprimer"
+                delete: "Supprimer"

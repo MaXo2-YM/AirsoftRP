@@ -1,19 +1,19 @@
 <h1><%= @user.username %></h1>
 	<table>
-		<tr><td>Nom :</td><td><%= @user.last_name %></td></tr>
-		<tr><td>Prénom :</td><td><%= @user.first_name %></td></tr>
-		<tr><td>Adresse E-Mail :</td><td><%= @user.mail %></td></tr>
-		<tr><td>Date d'Inscription :</td><td><%= @user.inscription_date %></td></tr>
-		<tr><td>Type de Compte :</td><td><%= @levelLit %></td></tr>
-		<tr><td colspan="2">Résumé</td></tr>
-		<tr><td>Nombre de personnages :</td><td><%= @user.characters.length %></td></tr>
-		<tr><td>Total Points D'expérience :</td><td><%= @totalxp %></td></tr>
-		<tr><td>Total Argent :</td><td><%= @totalmoney %></td></tr>
-		<tr><td>Nombre d'équipes actuelles :</td><td></td></tr>
-		<tr><td>Nombre de Répliques possédées :</td><td></td></tr>
-		<tr><td>Nombre de Répliques utilisées :</td><td></td></tr>
-		<tr><td>Nombre de Parties organisées :</td><td></td></tr>
-		<tr><td>Nombre de Parties jouées :</td><td></td></tr>
+		<tr><td><%= t("activerecord.attributes.user.last_name") %>:</td><td><%= @user.last_name %></td></tr>
+		<tr><td><%= t("activerecord.attributes.user.first_name") %>:</td><td><%= @user.first_name %></td></tr>
+		<tr><td><%= t("activerecord.attributes.user.mail") %>:</td><td><%= @user.mail %></td></tr>
+		<tr><td><%= t("activerecord.attributes.user.inscription_date") %>:</td><td><%= @user.inscription_date %></td></tr>
+		<tr><td><%= t("activerecord.attributes.user.account_type") %>:</td><td><%= @levelLit %></td></tr>
+		<tr><td colspan="2"><%= t(".resume") %>Résumé</td></tr>
+		<tr><td><%= t("activerecord.attributes.user.total_user_characters") %>:</td><td><%= @user.characters.length %></td></tr>
+		<tr><td><%= t("activerecord.attributes.user.total_user_xp") %>:</td><td><%= @totalxp %></td></tr>
+		<tr><td><%= t("activerecord.attributes.user.total_user_money") %>:</td><td><%= @totalmoney %></td></tr>
+		<tr><td><%= t("activerecord.attributes.user.total_user_teams") %>:</td><td></td></tr>
+		<tr><td><%= t("activerecord.attributes.user.total_user_guns_owned") %>:</td><td></td></tr>
+		<tr><td><%= t("activerecord.attributes.user.total_user_guns_used") %>:</td><td></td></tr>
+		<tr><td><%= t("activerecord.attributes.user.total_user_games_planned") %>:</td><td></td></tr>
+		<tr><td><%= t("activerecord.attributes.user.total_user_games_played") %>:</td><td></td></tr>
 	</table>
 <h2>Associations</h2>
 <h2>Equipes</h2>

@@ -26,7 +26,7 @@
 		<div>
 			<a href="/">Accueil</a> - Les Parties - Les Associations
 			<% if session[:user_id] %>
-				<% if User.find(session[:user_id]).level == 0 %>
+				<% if User.find(session[:user_id]).role == 0 %>
 			<a href="/users">Les Utilisateurs</a> -
 			<a href="/characters">Les Personnages</a> -
 			<a href="#">Les Répliques</a> -

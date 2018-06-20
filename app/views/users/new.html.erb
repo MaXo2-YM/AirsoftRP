@@ -1,8 +1,8 @@
-<h1>S'inscrire</h1>
+<h1><%= t(".title") %></h1>
 <%= form_for @user, url: {action: "create"} do |f| %>
 	<table>
 		<tr>
-			<td>Nom d'utilisateur :</td>
+			<td><%= f.label :username %>:</td>
 			<td>
 				<%= f.text_field :username %>
 				<% if @user.errors.any? %>
@@ -11,7 +11,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td>Adresse e-mail :</td>
+			<td><%= f.label :mail %>:</td>
 			<td>
 				<%= f.email_field :mail %>
 				<% if @user.errors.any? %>
@@ -20,7 +20,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td>Mot de passe :</td>
+			<td><%= f.label :password %>:</td>
 			<td>
 				<%= f.password_field :password %>
 				<% if @user.errors.any? %>
@@ -29,13 +29,13 @@
 			</td>
 		</tr>
 		<tr>
-			<td>Confirmation du Mot de passe :</td>
+			<td><%= f.label :password_confirmation %>:</td>
 			<td>
 				<%= f.password_field :password_confirmation %>
 				<% if @user.errors.any? %>
 			 		<%= @user.errors[:password_confirmation].first %>
 				<% end %>
 			</td></tr>
-		<tr><td></td><td><%= f.submit "S'inscrire" %></td>
+		<tr><td></td><td><%= f.submit %></td>
 	</table>
 <% end %>

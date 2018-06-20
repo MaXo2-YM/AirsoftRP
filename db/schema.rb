@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_07_162349) do
+ActiveRecord::Schema.define(version: 2018_06_16_151746) do
 
   create_table "characters", force: :cascade do |t|
     t.string "last_name"
@@ -32,7 +32,7 @@ ActiveRecord::Schema.define(version: 2018_06_07_162349) do
     t.string "encrypted_password"
     t.string "salt"
     t.datetime "inscription_date"
-    t.integer "level"
+    t.integer "role"
   end
 
 end

@@ -18,7 +18,6 @@ class UsersController < ApplicationController
 		@user.mail = params[:user][:mail]
 		@user.password = params[:user][:password]
 		@user.password_confirmation = params[:user][:password_confirmation]
-		#@user.level = 3
     	if @user.save
     		flash[:notice] = "Vous vous êtes bien inscrit"
         	flash[:color]= "valid"
@@ -35,11 +34,11 @@ class UsersController < ApplicationController
 		@user = User.find(params[:id])
 		if @user.admin?
 			@levelLit = "Administrateur"
-		elsif @user.level == 1
+		elsif @user.role == 1
 			@levelLit = "Modérateur"
-		elsif @user.level == 2
+		elsif @user.role == 2
 			@leveLit = "Contributeur"
-		elsif @user.level == 3
+		elsif @user.role == 3
 			@leveLit = "Utilisateur"
 		end
 
@@ -67,7 +66,7 @@ class UsersController < ApplicationController
 		@user.mail = params[:user][:mail]
 		@user.last_name = params[:user][:last_name]
 		@user.first_name = params[:user][:first_name]
-		@user.level = params[:user][:level]
+		@user.role = params[:user][:role]
 		@user.password = params[:user][:password]
 		if @user.save
     		flash[:notice] = "Vous avez bien modifié votre compte"
@@ -85,7 +84,6 @@ class UsersController < ApplicationController
 			flash[:notice] = "L'Utilisteur a bien été supprimé"
 			flash[:color]= "valid"
 			if @current_user.id == params[:id].to_i
-				# flash[:notice] = "blop"
 				logout
 			else
 				redirect_to "/users"
